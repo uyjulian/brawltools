@@ -36,11 +36,11 @@ namespace BrawlLib.Modeling
                     writer.WriteEndElement();
 
                     writer.WriteStartElement("created");
-                    writer.WriteString(DateTime.UtcNow.ToString("s", System.Globalization.CultureInfo.InvariantCulture) + "Z");
+                    writer.WriteString("");
                     writer.WriteEndElement();
 
                     writer.WriteStartElement("modified");
-                    writer.WriteString(DateTime.UtcNow.ToString("s", System.Globalization.CultureInfo.InvariantCulture) + "Z");
+                    writer.WriteString("");
                     writer.WriteEndElement();
 
                     writer.WriteStartElement("unit");
@@ -260,9 +260,8 @@ namespace BrawlLib.Modeling
                             {
                                 writer.WriteStartElement("diffuse");
                                 {
-                                    if (mat.Children.Count > 0)
+                                    foreach (MDL0MaterialRefNode mr in mat.Children)
                                     {
-                                        MDL0MaterialRefNode mr = mat.Children[0] as MDL0MaterialRefNode;
                                         if (mr._texture != null)
                                         {
                                             writer.WriteStartElement("texture");
@@ -272,10 +271,6 @@ namespace BrawlLib.Modeling
                                             }
                                             writer.WriteEndElement(); //texture
                                         }
-                                    }
-                                    else
-                                    {
-
                                     }
                                 }
                                 writer.WriteEndElement(); //diffuse
