@@ -656,11 +656,37 @@ namespace BrawlLib.Modeling
 
             writer.WriteAttributeString("count", count.ToString());
 
+            int uvcount = 0;
+            for (int i = 0; i < 12; i++)
+            {
+                if (manager._faceData[i] == null)
+                    continue;
+                switch (i)
+                {
+                    case 0:
+                    case 1:
+                    case 2:
+                    case 3:
+                        break;
+
+                    default:
+                        uvcount += 1;
+                        break;
+                }
+            }
+
             List<int> elementType = new List<int>();
             for (int i = 0; i < 12; i++)
             {
                 if (manager._faceData[i] == null)
                     continue;
+                if (i > 3)
+                {
+                    if (i - 4 != uvcount - 1)
+                    {
+                        continue;
+                    }
+                }
 
                 writer.WriteStartElement("input");
 
@@ -708,6 +734,13 @@ namespace BrawlLib.Modeling
                     int index = (int)pDataArr[pData++];
                     for (int y = 0; y < elements; y++)
                     {
+                        if (elementType[y] >= 4)
+                        {
+                            if (elementType[y] - 4 != uvcount - 1)
+                            {
+                                continue;
+                            }
+                        }
                         if (first)
                             first = false;
                         else
